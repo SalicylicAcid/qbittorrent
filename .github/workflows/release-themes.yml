@@ -19,15 +19,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install build deps (jq, zip, Qt rcc)
+      - name: Install build deps (jq, zip, Qt rcc, lrelease)
         run: |
           sudo apt-get update
-          sudo apt-get install -y jq zip qtbase5-dev-tools
-          # Ensure Qt5 rcc is on PATH on Ubuntu
+          sudo apt-get install -y jq zip qtbase5-dev-tools qttools5-dev-tools
+          # Ensure Qt5 binaries are on PATH
           if [ -d "/usr/lib/qt5/bin" ]; then
             echo "/usr/lib/qt5/bin" >> "$GITHUB_PATH"
           fi
           rcc -v || true
+          lrelease -version || true
 
       - name: Build all themes
         run: |
