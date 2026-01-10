@@ -145,11 +145,13 @@ window.qBittorrent.ContextMenu ??= (() => {
                 // Arm protection, but don't set a short timer yet. 
                 // We wait for touchend to set the dismissal timer.
                 // Set a safety timeout just in case touchend never comes (stuck state).
-                this._ignoreNextClick = true;
-                if (this._protectionTimer) clearTimeout(this._protectionTimer);
-                this._protectionTimer = setTimeout(() => { 
-                    this._ignoreNextClick = false; 
-                }, 3000);
+                if (this.touchStartAt) {
+                    this._ignoreNextClick = true;
+                    if (this._protectionTimer) clearTimeout(this._protectionTimer);
+                    this._protectionTimer = setTimeout(() => { 
+                        this._ignoreNextClick = false; 
+                    }, 3000);
+                }
             });
             elem.addEventListener("click", (e) => {
                 if (this._ignoreNextClick) {
@@ -183,7 +185,7 @@ window.qBittorrent.ContextMenu ??= (() => {
                     if (this._protectionTimer) clearTimeout(this._protectionTimer);
                     this._protectionTimer = setTimeout(() => {
                         this._ignoreNextClick = false;
-                    }, 2000);
+                    }, 600);
                 }
 
                 if (!touchStartEvent) return;
@@ -197,7 +199,7 @@ window.qBittorrent.ContextMenu ??= (() => {
                     if (this._protectionTimer) clearTimeout(this._protectionTimer);
                     this._protectionTimer = setTimeout(() => { 
                         this._ignoreNextClick = false; 
-                    }, 1000);
+                    }, 600);
                 }
             }, { passive: true });
         }
