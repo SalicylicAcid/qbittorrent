@@ -140,9 +140,24 @@ window.qBittorrent.ContextMenu ??= (() => {
 
         setupEventListeners(elem) {
             elem.addEventListener("contextmenu", (e) => {
+                this._contextMenuFired = true;
                 this.triggerMenu(e, elem);
+                // Arm protection, but don't set a short timer yet. 
+                // We wait for touchend to set the dismissal timer.
+                // Set a safety timeout just in case touchend never comes (stuck state).
+                this._ignoreNextClick = true;
+                if (this._protectionTimer) clearTimeout(this._protectionTimer);
+                this._protectionTimer = setTimeout(() => { 
+                    this._ignoreNextClick = false; 
+                }, 3000);
             });
             elem.addEventListener("click", (e) => {
+                if (this._ignoreNextClick) {
+                    this._ignoreNextClick = false;
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                }
                 this.hide();
             });
 
@@ -150,7 +165,10 @@ window.qBittorrent.ContextMenu ??= (() => {
                 this.hide();
                 this.touchStartAt = performance.now();
                 this.touchStartEvent = e;
+                this._contextMenuFired = false;
+                this._ignoreNextClick = false;
             }, { passive: true });
+            
             elem.addEventListener("touchend", (e) => {
                 const now = performance.now();
                 const touchStartAt = this.touchStartAt;
@@ -158,10 +176,29 @@ window.qBittorrent.ContextMenu ??= (() => {
 
                 this.touchStartAt = null;
                 this.touchStartEvent = null;
+                
+                // If protection was armed by 'contextmenu' event (which usually fires before touchend),
+                // we now start the countdown because the ghost click is imminent.
+                if (this._ignoreNextClick) {
+                    if (this._protectionTimer) clearTimeout(this._protectionTimer);
+                    this._protectionTimer = setTimeout(() => {
+                        this._ignoreNextClick = false;
+                    }, 2000);
+                }
+
+                if (!touchStartEvent) return;
 
                 const isTargetUnchanged = (Math.abs(e.changedTouches[0].pageX - touchStartEvent.changedTouches[0].pageX) <= 10) && (Math.abs(e.changedTouches[0].pageY - touchStartEvent.changedTouches[0].pageY) <= 10);
-                if (((now - touchStartAt) >= this.options.touchTimer) && isTargetUnchanged)
+                // Custom long press detection for browsers that don't fire contextmenu or if we want to enforce it
+                // We check !this._contextMenuFired to avoid double-triggering if the browser handled it natively.
+                if (!this._contextMenuFired && ((now - touchStartAt) >= this.options.touchTimer) && isTargetUnchanged) {
                     this.triggerMenu(touchStartEvent, elem);
+                    this._ignoreNextClick = true;
+                    if (this._protectionTimer) clearTimeout(this._protectionTimer);
+                    this._protectionTimer = setTimeout(() => { 
+                        this._ignoreNextClick = false; 
+                    }, 1000);
+                }
             }, { passive: true });
         }
 
@@ -171,6 +208,8 @@ window.qBittorrent.ContextMenu ??= (() => {
 
             // prevent long press from selecting this text
             t.style.userSelect = "none";
+            t.style.webkitUserSelect = "none";
+            t.style.webkitTouchCallout = "none";
             t.hasEventListeners = true;
             this.setupEventListeners(t);
         }
@@ -212,6 +251,7 @@ window.qBittorrent.ContextMenu ??= (() => {
                     const anchor = menuItem.firstElementChild;
                     this.execute(anchor.href.split("#")[1], this.options.element);
                     this.options.onClick.call(this, anchor, e);
+                    this.hide();
                 }
                 else {
                     e.stopPropagation();
@@ -219,7 +259,23 @@ window.qBittorrent.ContextMenu ??= (() => {
             });
 
             // hide on body click
-            $(document.body).addEventListener("click", () => {
+            $(document.body).addEventListener("click", (e) => {
+                // If I am not the currently shown menu, I have no business handling body clicks to close the menu.
+                if (lastShownContextMenu !== this) return;
+                
+                if (this._ignoreNextClick) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return;
+                }
+                
+                // If the user clicked ON the menu item, we do NOT hide here. 
+                // The menu item's own click handler will handle the action and then hide.
+                // If we hide here immediately, the action might not fire.
+                if (this.menu.contains(e.target)) {
+                    return;
+                }
+
                 this.hide();
                 this.options.element = null;
             });

@@ -23,6 +23,10 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 ### 3. Project Configuration
 - Be more developer-friendly by adding `.gitignore` and correctly tracking template files.
 
+### 4. Mobile & Interaction Fixes
+- **Mobile Context Menu**: Fixed "ghost clicks" and stuck menus on touch devices. The menu now correctly closes after selection and handles touch events properly.
+- **Resource Cleanup**: Removed references to missing assets (`toolbox-divider.gif`, etc.) to prevent 500/404 errors.
+
 ---
 
 ## 🇨🇳 说明 (Chinese)
@@ -43,4 +47,8 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 #### 3. Linux/系统兼容性
 - **大小写敏感修复**: 修复了 Linux 系统下国旗图标因文件名大小写匹配问题（例如 `US` 与 `us.svg`）而无法加载的 Bug。
 - **资源找回**: 补全了遗失的 MochaUI 基础资源（`L.gif`, `spinner.gif`, `spacer.gif`），消除了控制台 404 错误和布局抖动。
+
+#### 4. 移动端与交互修复
+- **移动端右键菜单**: 修复了触摸设备上的“幽灵点击”和菜单无法关闭的问题。现在菜单在选择后会正确关闭，并优化了触摸事件处理。
+- **资源清理**: 移除了对缺失资源（如 `toolbox-divider.gif` 等）的引用，修复了相关的 500/404 错误。
 

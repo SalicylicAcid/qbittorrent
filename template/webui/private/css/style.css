@@ -383,7 +383,7 @@ a.propButton img {
 }
 
 .contextMenu li:not(.disabled) .arrow-right {
-    background-image: url("../images/arrow-right.gif");
+    /* background-image: url("../images/arrow-right.gif"); */
     background-position: right center;
     background-repeat: no-repeat;
 }
@@ -481,7 +481,7 @@ a.propButton img {
 }
 
 #mochaToolbar .divider {
-    background-image: url("../images/toolbox-divider.gif");
+    /* background-image: url("../images/toolbox-divider.gif"); */
     background-position: left center;
     background-repeat: no-repeat;
     padding-left: 14px;
@@ -822,7 +822,7 @@ td.generalLabel {
 }
 
 td.statusBarSeparator {
-    background-image: url("../images/toolbox-divider.gif");
+    /* background-image: url("../images/toolbox-divider.gif"); */
     background-position: center 1px;
     background-repeat: no-repeat;
     background-size: 2px 18px;
