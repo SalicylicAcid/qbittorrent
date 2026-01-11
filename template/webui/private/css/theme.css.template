@@ -162,17 +162,6 @@ fieldset.settings table, fieldset.settings td, fieldset.settings th { background
 select option { background: var(--bg-primary); color: var(--fg-primary); }
 input[type="text"], input[type="number"], input[type="password"], textarea { background: var(--bg-primary) !important; color: var(--fg-primary) !important; }
 
-/* Force visibility of new tracker fields */
-#addTrackersURL, #addTrackersURLListTextarea {
-  background-color: var(--bg-primary) !important;
-  color: var(--fg-primary) !important;
-  opacity: 1 !important;
-}
-#addTrackersURL:disabled, #addTrackersURLListTextarea:disabled {
-  color: var(--fg-disabled) !important;
-  opacity: .6 !important;
-}
-
 #mochaToolbar a.selected, #mochaToolbar button.selected,
 .toolbar a.selected, .toolbar button.selected,
 #preferencesTabs li.selected a,

@@ -27,6 +27,13 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 - **Mobile Context Menu**: Fixed "ghost clicks" and stuck menus on touch devices. The menu now correctly closes after selection and handles touch events properly.
 - **Resource Cleanup**: Removed references to missing assets (`toolbox-divider.gif`, etc.) to prevent 500/404 errors.
 
+### 5. OpenWrt/qBittorrent-EE Compatibility & UI Fixes
+- **Preferences Compatibility**:
+  - Validated and hid unsupported configuration fields in Preferences when running with qBittorrent Enhanced Edition (EE) backends, preventing "undefined" values and UI errors.
+  - Mapped specific API keys (e.g., `auto_update_trackers_enabled`) to their correct backend equivalents.
+- **RSS Downloader UI**:
+  - Fixed RSS Rule button icons ("Add Rule", "Delete Rule") by enforcing correct background sizing (`16px`) and positioning to prevent icons from appearing "zoomed in" or missing.
+
 ---
 
 ## 🇨🇳 说明 (Chinese)
@@ -47,6 +54,13 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 #### 3. Linux/系统兼容性
 - **大小写敏感修复**: 修复了 Linux 系统下国旗图标因文件名大小写匹配问题（例如 `US` 与 `us.svg`）而无法加载的 Bug。
 - **资源找回**: 补全了遗失的 MochaUI 基础资源（`L.gif`, `spinner.gif`, `spacer.gif`），消除了控制台 404 错误和布局抖动。
+
+#### 4. OpenWrt/qBittorrent-EE 兼容性与 UI 修正
+- **偏好设置适配**:
+  - 针对 qBittorrent Enhanced Edition (EE) 后端，自动检测并没有效隐藏不支持的配置选项，防止界面出现 "undefined" 或错误值。
+  - 修正了 API 字段映射（如 `auto_update_trackers_enabled`），确保设置能正确保存。
+- **RSS 下载器 UI**:
+  - 修复了 RSS 下载规则按钮（新建/删除规则）的图标显示问题，强制修正了背景图的尺寸 (`16px`) 和位置，解决了图标显示不全或过大的问题。
 
 #### 4. 移动端与交互修复
 - **移动端右键菜单**: 修复了触摸设备上的“幽灵点击”和菜单无法关闭的问题。现在菜单在选择后会正确关闭，并优化了触摸事件处理。

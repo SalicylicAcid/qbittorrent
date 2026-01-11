@@ -2045,7 +2045,6 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
         const updateAddTrackersFromURLEnabled = () => {
             const isAddTrackersFromURLEnabled = $("addTrackersFromURLCheckbox").checked;
             $("addTrackersURL").disabled = !isAddTrackersFromURLEnabled;
-            $("addTrackersURLListTextarea").disabled = !isAddTrackersFromURLEnabled;
         };
 
         // WebUI tab
@@ -2201,13 +2200,25 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     // Language
                     updateWebuiLocaleSelect(pref.locale);
                     updateColoSchemeSelect();
-                    $("statusBarExternalIP").checked = pref.status_bar_external_ip;
-                    $("performanceWarning").checked = pref.performance_warning;
+                    if (pref.status_bar_external_ip !== undefined)
+                        $("statusBarExternalIP").checked = pref.status_bar_external_ip;
+                    else
+                        $("statusBarExternalIP").style.display = $("statusBarExternalIP").labels[0].style.display = "none";
+
+                    if (pref.performance_warning !== undefined)
+                        $("performanceWarning").checked = pref.performance_warning;
+                    else
+                        $("performanceWarning").style.display = $("performanceWarning").labels[0].style.display = "none";
+
                     document.getElementById("displayFullURLTrackerColumn").checked = (LocalPreferences.get("full_url_tracker_column", "false") === "true");
                     document.getElementById("hideZeroFiltersCheckbox").checked = (LocalPreferences.get("hide_zero_status_filters", "false") === "true");
                     $("dblclickDownloadSelect").value = LocalPreferences.get("dblclick_download", "1");
                     $("dblclickCompleteSelect").value = LocalPreferences.get("dblclick_complete", "1");
-                    document.getElementById("confirmTorrentDeletion").checked = pref.confirm_torrent_deletion;
+                    if (pref.confirm_torrent_deletion !== undefined)
+                        document.getElementById("confirmTorrentDeletion").checked = pref.confirm_torrent_deletion;
+                    else
+                        $("confirmTorrentDeletion").closest("div.formRow").style.display = "none";
+
                     document.getElementById("useAltRowColorsInput").checked = (LocalPreferences.get("use_alt_row_colors", "true") === "true");
                     $("filelog_checkbox").checked = pref.file_log_enabled;
                     $("filelog_save_path_input").value = pref.file_log_path;
@@ -2234,7 +2245,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     }
                     $("contentlayout_select").getChildren("option")[index].selected = true;
                     $("addToTopOfQueueCheckbox").checked = pref.add_to_top_of_queue;
-                    $("dontstartdownloads_checkbox").checked = pref.add_stopped_enabled;
+                    $("dontstartdownloads_checkbox").checked = pref.start_paused_enabled;
                     switch (pref.torrent_stop_condition) {
                         case "None":
                             index = 0;
@@ -2252,7 +2263,10 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
 
                     $("preallocateall_checkbox").checked = pref.preallocate_all;
                     $("appendext_checkbox").checked = pref.incomplete_files_ext;
-                    $("unwantedfolder_checkbox").checked = pref.use_unwanted_folder;
+                    if (pref.use_unwanted_folder !== undefined)
+                        $("unwantedfolder_checkbox").checked = pref.use_unwanted_folder;
+                    else
+                        $("unwantedfolder_checkbox").closest("div.formRow").style.display = "none";
 
                     // Saving Management
                     $("default_tmm_combobox").value = pref.auto_tmm_enabled;
@@ -2476,16 +2490,19 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     // Add trackers
                     $("add_trackers_checkbox").checked = pref.add_trackers_enabled;
                     $("add_trackers_textarea").value = pref.add_trackers;
-                    $("addTrackersFromURLCheckbox").checked = pref.add_trackers_from_url_enabled;
-                    $("addTrackersURLListTextarea").value = pref.add_trackers_url_list || "";
-                    $("addTrackersURL").value = pref.add_trackers_url || "";
+                    $("addTrackersFromURLCheckbox").checked = pref.auto_update_trackers_enabled;
+                    $("addTrackersURLListTextarea").value = pref.public_trackers;
+                    $("addTrackersURL").value = pref.customize_trackers_list_url;
                     updateAddTrackersEnabled();
                     updateAddTrackersFromURLEnabled();
 
                     // RSS Tab
                     $("enable_fetching_rss_feeds_checkbox").checked = pref.rss_processing_enabled;
                     $("feed_refresh_interval").value = pref.rss_refresh_interval;
-                    $("feedFetchDelay").value = pref.rss_fetch_delay;
+                    if (pref.rss_fetch_delay !== undefined)
+                        $("feedFetchDelay").value = pref.rss_fetch_delay;
+                    else
+                        $("feedFetchDelay").closest("tr").style.display = "none";
                     $("maximum_article_number").value = pref.rss_max_articles_per_feed;
                     $("enable_auto_downloading_rss_torrents_checkbox").checked = pref.rss_auto_downloading_enabled;
                     $("downlock_repack_proper_episodes").checked = pref.rss_download_repack_proper_episodes;
@@ -2525,7 +2542,11 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     updateHostHeaderValidationSettings();
 
                     // Custom HTTP headers
-                    $("webUIUseCustomHTTPHeadersCheckbox").checked = pref.web_ui_use_custom_http_headers_enabled;
+                    if (pref.web_ui_use_custom_http_headers_enabled !== undefined)
+                        $("webUIUseCustomHTTPHeadersCheckbox").checked = pref.web_ui_use_custom_http_headers_enabled;
+                    else
+                        $("webUIUseCustomHTTPHeadersCheckbox").closest("legend").style.display = "none";
+
                     $("webUICustomHTTPHeadersTextarea").value = pref.web_ui_custom_http_headers;
                     updateWebUICustomHTTPHeadersSettings();
 
@@ -2544,26 +2565,47 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
 
                     // Advanced settings
                     // qBittorrent section
-                    $("resumeDataStorageType").value = pref.resume_data_storage_type;
-                    $("torrentContentRemoveOption").value = pref.torrent_content_remove_option;
-                    $("memoryWorkingSetLimit").value = pref.memory_working_set_limit;
                     updateNetworkInterfaces(pref.current_network_interface, pref.current_interface_name);
                     updateInterfaceAddresses(pref.current_network_interface, pref.current_interface_address);
+                    $("resumeDataStorageType").value = pref.resume_data_storage_type;
+                    if (pref.torrent_content_remove_option !== undefined)
+                        $("torrentContentRemoveOption").value = pref.torrent_content_remove_option;
+                    else
+                        $("torrentContentRemoveOption").closest("tr").style.display = "none";
+                    $("memoryWorkingSetLimit").value = pref.memory_working_set_limit;
                     $("saveResumeDataInterval").value = pref.save_resume_data_interval;
-                    $("saveStatisticsInterval").value = pref.save_statistics_interval;
+                    if (pref.save_statistics_interval !== undefined)
+                        $("saveStatisticsInterval").value = pref.save_statistics_interval;
+                    else
+                        $("saveStatisticsInterval").closest("tr").style.display = "none";
                     $("torrentFileSizeLimit").value = (pref.torrent_file_size_limit / 1024 / 1024);
-                    document.getElementById("confirmTorrentRecheck").checked = pref.confirm_torrent_recheck;
+                    if (pref.confirm_torrent_recheck !== undefined)
+                        document.getElementById("confirmTorrentRecheck").checked = pref.confirm_torrent_recheck;
+                    else
+                        $("confirmTorrentRecheck").closest("tr").style.display = "none";
                     $("recheckTorrentsOnCompletion").checked = pref.recheck_completed_torrents;
-                    $("appInstanceName").value = pref.app_instance_name;
+                    if (pref.app_instance_name !== undefined)
+                        $("appInstanceName").value = pref.app_instance_name;
+                    else
+                        $("appInstanceName").closest("tr").style.display = "none";
                     $("refreshInterval").value = pref.refresh_interval;
                     $("resolvePeerCountries").checked = pref.resolve_peer_countries;
                     $("reannounceWhenAddressChanged").checked = pref.reannounce_when_address_changed;
                     $("enableEmbeddedTracker").checked = pref.enable_embedded_tracker;
                     $("embeddedTrackerPort").value = pref.embedded_tracker_port;
                     $("embeddedTrackerPortForwarding").checked = pref.embedded_tracker_port_forwarding;
-                    $("markOfTheWeb").checked = pref.mark_of_the_web;
-                    $("ignoreSSLErrors").checked = pref.ignore_ssl_errors;
-                    $("pythonExecutablePath").value = pref.python_executable_path;
+                    if (pref.mark_of_the_web !== undefined)
+                        $("markOfTheWeb").checked = pref.mark_of_the_web;
+                    else
+                        $("markOfTheWeb").closest("tr").style.display = "none";
+                    if (pref.ignore_ssl_errors !== undefined)
+                        $("ignoreSSLErrors").checked = pref.ignore_ssl_errors;
+                    else
+                        $("ignoreSSLErrors").closest("tr").style.display = "none";
+                    if (pref.python_executable_path !== undefined)
+                        $("pythonExecutablePath").value = pref.python_executable_path;
+                    else
+                        $("pythonExecutablePath").closest("tr").style.display = "none";
                     // libtorrent section
                     $("bdecodeDepthLimit").value = pref.bdecode_depth_limit;
                     $("bdecodeTokenLimit").value = pref.bdecode_token_limit;
@@ -2602,14 +2644,20 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     $("announceAllTrackers").checked = pref.announce_to_all_trackers;
                     $("announceAllTiers").checked = pref.announce_to_all_tiers;
                     $("announceIP").value = pref.announce_ip;
-                    $("announcePort").value = pref.announce_port;
+                    if (pref.announce_port !== undefined)
+                        $("announcePort").value = pref.announce_port;
+                    else
+                        $("announcePort").closest("tr").style.display = "none";
                     $("maxConcurrentHTTPAnnounces").value = pref.max_concurrent_http_announces;
                     $("stopTrackerTimeout").value = pref.stop_tracker_timeout;
                     $("peerTurnover").value = pref.peer_turnover;
                     $("peerTurnoverCutoff").value = pref.peer_turnover_cutoff;
                     $("peerTurnoverInterval").value = pref.peer_turnover_interval;
                     $("requestQueueSize").value = pref.request_queue_size;
-                    $("dhtBootstrapNodes").value = pref.dht_bootstrap_nodes;
+                    if (pref.dht_bootstrap_nodes !== undefined)
+                        $("dhtBootstrapNodes").value = pref.dht_bootstrap_nodes;
+                    else
+                        $("dhtBootstrapNodes").closest("tr").style.display = "none";
                     $("i2pInboundQuantity").value = pref.i2p_inbound_quantity;
                     $("i2pOutboundQuantity").value = pref.i2p_outbound_quantity;
                     $("i2pInboundLength").value = pref.i2p_inbound_length;
@@ -2652,7 +2700,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
             // When adding a torrent
             settings["torrent_content_layout"] = $("contentlayout_select").getSelected()[0].value;
             settings["add_to_top_of_queue"] = $("addToTopOfQueueCheckbox").checked;
-            settings["add_stopped_enabled"] = $("dontstartdownloads_checkbox").checked;
+            settings["start_paused_enabled"] = $("dontstartdownloads_checkbox").checked;
             settings["torrent_stop_condition"] = $("stopConditionSelect").getSelected()[0].value;
             settings["merge_trackers"] = document.getElementById("mergeTrackersInput").checked;
             settings["auto_delete_mode"] = Number($("deletetorrentfileafter_checkbox").checked);
@@ -2915,9 +2963,8 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
             // Add trackers
             settings["add_trackers_enabled"] = $("add_trackers_checkbox").checked;
             settings["add_trackers"] = $("add_trackers_textarea").value;
-            settings["add_trackers_from_url_enabled"] = $("addTrackersFromURLCheckbox").checked;
-            settings["add_trackers_url_list"] = $("addTrackersURLListTextarea").value;
-            settings["add_trackers_url"] = $("addTrackersURL").value;
+            settings["auto_update_trackers_enabled"] = $("addTrackersFromURLCheckbox").checked;
+            settings["customize_trackers_list_url"] = $("addTrackersURL").value;
 
             // RSS Tab
             settings["rss_processing_enabled"] = $("enable_fetching_rss_feeds_checkbox").checked;
