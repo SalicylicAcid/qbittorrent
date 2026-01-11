@@ -2476,8 +2476,8 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     $("add_trackers_checkbox").checked = pref.add_trackers_enabled;
                     $("add_trackers_textarea").value = pref.add_trackers;
                     $("addTrackersFromURLCheckbox").checked = pref.add_trackers_from_url_enabled;
-                    $("addTrackersURLListTextarea").value = pref.add_trackers_url_list;
-                    $("addTrackersURL").value = pref.add_trackers_url;
+                    $("addTrackersURLListTextarea").value = pref.add_trackers_url_list || "";
+                    $("addTrackersURL").value = pref.add_trackers_url || "";
                     updateAddTrackersEnabled();
                     updateAddTrackersFromURLEnabled();
 
