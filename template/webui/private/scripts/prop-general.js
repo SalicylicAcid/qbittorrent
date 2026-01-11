@@ -168,9 +168,15 @@ window.qBittorrent.PropGeneral ??= (() => {
                         .replace("%2", data.peers_total);
                     $("peers").textContent = peers;
 
-                    $("share_ratio").textContent = data.share_ratio.toFixed(2);
+                    let shareRatio = (data.share_ratio === -1) ? "∞" : "0.00";
+                    if ((data.share_ratio !== undefined) && (data.share_ratio !== null) && (data.share_ratio !== -1))
+                        shareRatio = data.share_ratio.toFixed(2);
+                    $("share_ratio").textContent = shareRatio;
 
-                    $("popularity").textContent = data.popularity.toFixed(2);
+                    let popularity = "";
+                    if ((data.popularity !== undefined) && (data.popularity !== null))
+                        popularity = data.popularity.toFixed(2);
+                    $("popularity").textContent = popularity;
 
                     $("reannounce").textContent = window.qBittorrent.Misc.friendlyDuration(data.reannounce);
 

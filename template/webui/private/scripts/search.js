@@ -242,20 +242,21 @@ window.qBittorrent.Search ??= (() => {
         const isTabSelected = tab.classList.contains("selected");
         const newTabToSelect = isTabSelected ? (tab.nextSibling || tab.previousSibling) : null;
 
-        const currentSearchId = getSelectedSearchId();
-        const state = searchState.get(currentSearchId);
+        const state = searchState.get(searchId);
         // don't bother sending a stop request if already stopped
         if (state && state.running)
             stopSearch(searchId);
 
         tab.remove();
 
-        fetch("api/v2/search/delete", {
-            method: "POST",
-            body: new URLSearchParams({
-                id: searchId
-            })
-        });
+        if (!state || !state.deleted) {
+            fetch("api/v2/search/delete", {
+                method: "POST",
+                body: new URLSearchParams({
+                    id: searchId
+                })
+            });
+        }
 
         const searchJobs = JSON.parse(LocalPreferences.get("search_jobs", "[]"));
         const jobIndex = searchJobs.findIndex((job) => job.id === searchId);
@@ -790,6 +791,8 @@ window.qBittorrent.Search ??= (() => {
                     if ((response.status === 400) || (response.status === 404)) {
                         // bad params. search id is invalid
                         resetSearchState(searchId);
+                        if (state)
+                            state.deleted = true;
                         updateStatusIconElement(searchId, "QBT_TR(An error occurred during search...)QBT_TR[CONTEXT=SearchJobWidget]", "images/error.svg");
                     }
                     else {

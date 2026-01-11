@@ -34,13 +34,21 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 - **RSS Downloader UI**:
   - Fixed RSS Rule button icons ("Add Rule", "Delete Rule") by enforcing correct background sizing (`16px`) and positioning to prevent icons from appearing "zoomed in" or missing.
 
+### 6. General Stability Fixes (v1.0.3)
+- **Search Functionality**: Fixed issues where search tabs became unresponsive and threw 404 errors after restarting qBittorrent.
+- **Context Menu**: Fixed an issue where the plugin list context menu failed to open in localized versions (e.g., Chinese) due to column name mismatches.
+- **Download Properties**: Fixed a bug causing the torrent information tab to be blank due to undefined `popularity` or `share_ratio` values.
+
 ---
 
 ## 🇨🇳 说明 (Chinese)
 
 本分支旨在修复原版主题在特定环境（如 OpenWrt/LuCI）下的兼容性问题，并完善深色模式的细节。
 
-### 主要修复与改进
+### 主要修复与改进 (v1.0.3)
+- **搜索功能**: 修复了重启 qBittorrent 后搜索标签页失效并报错 404 的问题。
+- **右键菜单**: 修复了在非英文环境下（如中文）插件列表右键菜单无法弹出的问题。
+- **下载信息**: 修复了因缺少部分数据导致种子信息栏显示为空白的问题。
 
 #### 1. luci-app-qbittorrent 完美适配
 - **消除报错**: 彻底解决了在 OpenWrt 环境下常见的 `"The announce port must be between 0 and 65535."` 错误提示。
