@@ -2045,6 +2045,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
         const updateAddTrackersFromURLEnabled = () => {
             const isAddTrackersFromURLEnabled = $("addTrackersFromURLCheckbox").checked;
             $("addTrackersURL").disabled = !isAddTrackersFromURLEnabled;
+            $("addTrackersURLListTextarea").disabled = !isAddTrackersFromURLEnabled;
         };
 
         // WebUI tab
