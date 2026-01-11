@@ -12,9 +12,9 @@ OUTPUT_DIR_WEBUI=${OUTPUT_DIR_WEBUI:-webui}
 OUTPUT_DIR_ASSETS=${OUTPUT_DIR_ASSETS:-assets}
 
 # Build flags (can be overridden)
-BUILD_QT=${BUILD_QT:-1}
+BUILD_QT=${BUILD_QT:-0}
 BUILD_WEBUI=${BUILD_WEBUI:-1}
-BUILD_PALETTE=${BUILD_PALETTE:-1}
+BUILD_PALETTE=${BUILD_PALETTE:-0}
 
 show_usage() {
     cat <<EOF
@@ -230,12 +230,12 @@ EOF
         mkdir -p "$OUTPUT_DIR_WEBUI"
         tar -C "$TMP_WEBUI_BASE" -czf "$OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.tar.gz" "$ARCHIVE_ROOT_NAME"
         echo "     -> Created: $OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.tar.gz"
-        if command -v zip >/dev/null 2>&1; then
-            ( cd "$TMP_WEBUI_BASE" && zip -qr "$OLDPWD/$OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.zip" "$ARCHIVE_ROOT_NAME" ) >/dev/null 2>&1 || true
-            if [ -f "$OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.zip" ]; then
-                echo "     -> Created: $OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.zip"
-            fi
-        fi
+        # if command -v zip >/dev/null 2>&1; then
+        #     ( cd "$TMP_WEBUI_BASE" && zip -qr "$OLDPWD/$OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.zip" "$ARCHIVE_ROOT_NAME" ) >/dev/null 2>&1 || true
+        #     if [ -f "$OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.zip" ]; then
+        #         echo "     -> Created: $OUTPUT_DIR_WEBUI/${ARCHIVE_BASENAME}.zip"
+        #     fi
+        # fi
         rm -rf "$TMP_WEBUI_BASE"
     fi
 
