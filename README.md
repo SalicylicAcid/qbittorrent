@@ -34,6 +34,10 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 - **RSS Downloader UI**:
   - Fixed RSS Rule button icons ("Add Rule", "Delete Rule") by enforcing correct background sizing (`16px`) and positioning to prevent icons from appearing "zoomed in" or missing.
 
+### 7. Deletion Confirmation Fixes (v1.0.4)
+- **Confirmation Dialog**: Fixed an issue where the "Confirm when deleting torrents" dialog would not appear if the backend setting was undefined. Now defaults to true for safety.
+- **Preferences Integration**: Fixed the "Confirm when deleting torrents" checkbox in Preferences not showing or persisting correctly when the backend response is incomplete. It now syncs with local browser storage.
+
 ### 6. General Stability Fixes (v1.0.3)
 - **Search Functionality**: Fixed issues where search tabs became unresponsive and threw 404 errors after restarting qBittorrent.
 - **Context Menu**: Fixed an issue where the plugin list context menu failed to open in localized versions (e.g., Chinese) due to column name mismatches.
@@ -44,6 +48,10 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 ## 🇨🇳 说明 (Chinese)
 
 本分支旨在修复原版主题在特定环境（如 OpenWrt/LuCI）下的兼容性问题，并完善深色模式的细节。
+
+### 主要修复与改进 (v1.0.4)
+- **删除确认**: 修复了在部分后端（如增强版）配置缺失时，删除种子不弹出确认框的问题。现在默认开启确认。
+- **设置同步**: 修复了“删除种子时确认”选项在设置面板中被隐藏或无法保存的问题，增加了本地缓存支持。
 
 ### 主要修复与改进 (v1.0.3)
 - **搜索功能**: 修复了重启 qBittorrent 后搜索标签页失效并报错 404 的问题。

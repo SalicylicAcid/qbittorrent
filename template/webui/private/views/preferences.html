@@ -2217,7 +2217,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
                     if (pref.confirm_torrent_deletion !== undefined)
                         document.getElementById("confirmTorrentDeletion").checked = pref.confirm_torrent_deletion;
                     else
-                        $("confirmTorrentDeletion").closest("div.formRow").style.display = "none";
+                        document.getElementById("confirmTorrentDeletion").checked = (LocalPreferences.get("confirm_torrent_deletion", "true") === "true");
 
                     document.getElementById("useAltRowColorsInput").checked = (LocalPreferences.get("use_alt_row_colors", "true") === "true");
                     $("filelog_checkbox").checked = pref.file_log_enabled;
@@ -2687,6 +2687,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.)QBT_TR[CONTEXT=OptionsD
             LocalPreferences.set("dblclick_download", $("dblclickDownloadSelect").value);
             LocalPreferences.set("dblclick_complete", $("dblclickCompleteSelect").value);
             settings["confirm_torrent_deletion"] = document.getElementById("confirmTorrentDeletion").checked;
+            LocalPreferences.set("confirm_torrent_deletion", settings["confirm_torrent_deletion"].toString());
             LocalPreferences.set("use_alt_row_colors", document.getElementById("useAltRowColorsInput").checked.toString());
             settings["file_log_enabled"] = $("filelog_checkbox").checked;
             settings["file_log_path"] = $("filelog_save_path_input").value;
