@@ -1056,9 +1056,11 @@ window.qBittorrent.DynamicTable ??= (() => {
                         stateClass = "stateStalledDL";
                         break;
                     case "stoppedDL":
+                    case "pausedDL":
                         stateClass = "stateStoppedDL";
                         break;
                     case "stoppedUP":
+                    case "pausedUP":
                         stateClass = "stateStoppedUP";
                         break;
                     case "queuedDL":
@@ -1166,9 +1168,11 @@ window.qBittorrent.DynamicTable ??= (() => {
                         status = "QBT_TR(Checking resume data)QBT_TR[CONTEXT=TransferListDelegate]";
                         break;
                     case "stoppedDL":
+                    case "pausedDL":
                         status = "QBT_TR(Stopped)QBT_TR[CONTEXT=TransferListDelegate]";
                         break;
                     case "stoppedUP":
+                    case "pausedUP":
                         status = "QBT_TR(Completed)QBT_TR[CONTEXT=TransferListDelegate]";
                         break;
                     case "moving":
