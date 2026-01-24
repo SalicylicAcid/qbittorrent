@@ -740,13 +740,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
         checkingResumeData: 8,
         queuedDL: 9,
         queuedUP: 10,
-        checkingUP: 11,
-        checkingDL: 12,
-        stoppedDL: 13,
-        stoppedUP: 14,
-        moving: 15,
-        missingFiles: 16,
-        error: 17
+        queuedForChecking: 11,
+        checkingUP: 12,
+        checkingDL: 13,
+        stoppedDL: 14,
+        pausedDL: 14,
+        stoppedUP: 15,
+        pausedUP: 15,
+        moving: 16,
+        missingFiles: 17,
+        error: 18
     });
 
     let syncMainDataTimeoutID = -1;

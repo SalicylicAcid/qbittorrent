@@ -43,11 +43,19 @@ Forked from: [MahdiMirzadeh/qbittorrent](https://github.com/MahdiMirzadeh/qbitto
 - **Context Menu**: Fixed an issue where the plugin list context menu failed to open in localized versions (e.g., Chinese) due to column name mismatches.
 - **Download Properties**: Fixed a bug causing the torrent information tab to be blank due to undefined `popularity` or `share_ratio` values.
 
+### 8. Sorting Logic Fixes (v1.0.6)
+- **Status Column**: Fixed sorting logic to correctly handle and group various statuses (e.g., Queued, Paused, Checking) that were previously unsorted or mixed.
+- **Numerical Columns**: Fixed sorting for columns like Ratio, Popularity, and Last Activity where "Infinity" or unknown values (-1) were treated as the smallest number instead of the largest.
+
 ---
 
 ## 🇨🇳 说明 (Chinese)
 
 本分支旨在修复原版主题在特定环境（如 OpenWrt/LuCI）下的兼容性问题，并完善深色模式的细节。
+
+### 主要修复与改进 (v1.0.6)
+- **排序逻辑**: 修复了“状态”列的排序问题，现在可以正确分组和排序各种状态（如排队、暂停、检查中等）。
+- **数值列排序**: 修复了分享率、热度、最后活动时间等列的排序逻辑，解决了“无穷大”或未知数值（-1）被错误视为最小值的问题。
 
 ### 主要修复与改进 (v1.0.4)
 - **删除确认**: 修复了在部分后端（如增强版）配置缺失时，删除种子不弹出确认框的问题。现在默认开启确认。
