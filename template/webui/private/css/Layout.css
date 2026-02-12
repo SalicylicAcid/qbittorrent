@@ -132,9 +132,9 @@ Required by:
     z-index: 8000;
 }
 
-#desktopNavbar li:hover ul ul,
+#desktopNavbar li.active ul ul,
 #desktopNavbar li.ieHover ul ul,
-#desktopNavbar li:hover ul ul ul,
+#desktopNavbar li.active ul ul ul,
 #desktopNavbar li.ieHover ul ul ul {
     left: -999em;
 }
@@ -168,18 +168,18 @@ Required by:
     color: var(--color-text-white);
 }
 
-/* lists nested under hovered list items */
-#desktopNavbar li:hover ul,
+/* lists nested under clicked/active list items */
+#desktopNavbar li.active ul,
 #desktopNavbar li.ieHover ul,
 #desktopNavbar li li.ieHover ul,
 #desktopNavbar li li li.ieHover ul,
-#desktopNavbar li li:hover ul,
-#desktopNavbar li li li:hover ul {
+#desktopNavbar li li.active ul,
+#desktopNavbar li li li.active ul {
     left: auto;
 }
 
 /* For IE7 */
-#desktopNavbar li:hover {
+#desktopNavbar li.active {
     position: static;
 }
 

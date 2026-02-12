@@ -1316,11 +1316,38 @@ const initializeWindows = () => {
         }
     });
 
-    // Deactivate menu header links
+    // Deactivate menu header links and add click-to-toggle behavior
     for (const el of document.querySelectorAll("a.returnFalse")) {
         el.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
+            
+            // Toggle menu open/close for top-level menu items
+            const parentLi = e.target.closest("#desktopNavbar > ul > li");
+            if (parentLi) {
+                const wasActive = parentLi.classList.contains("active");
+                
+                // Close all other open menus
+                for (const item of document.querySelectorAll("#desktopNavbar > ul > li.active")) {
+                    item.classList.remove("active");
+                }
+                
+                // Toggle current menu
+                if (!wasActive) {
+                    parentLi.classList.add("active");
+                }
+            }
         });
     }
+    
+    // Close menus when clicking outside or on navbar blank area
+    document.addEventListener("click", (e) => {
+        // Don't close if clicking on a menu link (already handled above)
+        const clickedLink = e.target.closest("#desktopNavbar a");
+        if (!clickedLink) {
+            for (const item of document.querySelectorAll("#desktopNavbar > ul > li.active")) {
+                item.classList.remove("active");
+            }
+        }
+    });
 };
