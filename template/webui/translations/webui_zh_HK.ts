@@ -668,7 +668,7 @@
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished" />
+        <translation>啟動</translation>
     </message>
     <message>
         <source>Manage Cookies...</source>
@@ -3278,7 +3278,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</source>
     </message>
     <message>
         <source>Force Start</source>
-        <translation type="unfinished" />
+        <translation>強制啟動</translation>
     </message>
     <message>
         <source>Save path:</source>
@@ -3298,7 +3298,7 @@ Use ';' to split multiple entries. Can use wildcard '*'.</source>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished" />
+        <translation>啟動</translation>
     </message>
     <message>
         <source>New name:</source>
